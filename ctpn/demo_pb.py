@@ -19,6 +19,7 @@ from lib.rpn_msr.proposal_layer_tf import proposal_layer
 
 ROOT_DIR = "/Users/yh/workspace/tensorflow/czy/text-detection-ctpn/"
 
+
 def resize_im(im, scale, max_scale=None):
     f = float(scale) / min(im.shape[0], im.shape[1])
     if max_scale != None and f * max(im.shape[0], im.shape[1]) > max_scale:
@@ -91,7 +92,7 @@ if __name__ == '__main__':
                 dtype=np.float32)
         cls_prob, box_pred = sess.run([output_cls_prob, output_box_pred], feed_dict={input_img: blobs['data']})
         rois, _ = proposal_layer(cls_prob, box_pred, blobs['im_info'], 'TEST', anchor_scales=cfg.ANCHOR_SCALES)
-
+        print("rois:", rois)
         scores = rois[:, 0]
         boxes = rois[:, 1:5] / im_scales[0]
         textdetector = TextDetector()
