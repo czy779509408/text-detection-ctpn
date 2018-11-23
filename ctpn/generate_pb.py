@@ -10,8 +10,9 @@ sys.path.append(os.getcwd())
 from lib.networks.factory import get_network
 from lib.fast_rcnn.config import cfg, cfg_from_file
 
+ROOT_DIR = "/Users/yh/workspace/tensorflow/czy/text-detection-ctpn/"
 if __name__ == "__main__":
-    cfg_from_file('ctpn/text.yml')
+    cfg_from_file(ROOT_DIR + 'ctpn/text.yml')
 
     config = tf.ConfigProto(allow_soft_placement=True)
     sess = tf.Session(config=config)
@@ -35,7 +36,7 @@ if __name__ == "__main__":
         print(x)
     output_node_names = 'Reshape_2,rpn_bbox_pred/Reshape_1'
     output_graph_def = convert_variables_to_constants(sess, input_graph_def, output_node_names.split(','))
-    output_graph = 'data/ctpn.pb'
+    output_graph = ROOT_DIR + 'data/ctpn.pb'
     with tf.gfile.GFile(output_graph, 'wb') as f:
         f.write(output_graph_def.SerializeToString())
     sess.close()

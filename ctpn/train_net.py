@@ -9,8 +9,10 @@ from lib.datasets.factory import get_imdb
 from lib.networks.factory import get_network
 from lib.fast_rcnn.config import cfg
 
+ROOT_DIR = "/Users/yh/workspace/tensorflow/czy/text-detection-ctpn/"
+
 if __name__ == '__main__':
-    cfg_from_file('ctpn/text.yml')
+    cfg_from_file(ROOT_DIR + 'ctpn/text.yml')
     print('Using config:')
     pprint.pprint(cfg)
     imdb = get_imdb('voc_2007_trainval')
@@ -30,6 +32,6 @@ if __name__ == '__main__':
     train_net(network, imdb, roidb,
               output_dir=output_dir,
               log_dir=log_dir,
-              pretrained_model='data/pretrain/VGG_imagenet.npy',
+              pretrained_model=ROOT_DIR + 'data/pretrain/VGG_imagenet.npy',
               max_iters=int(cfg.TRAIN.max_steps),
               restore=bool(int(cfg.TRAIN.restore)))
