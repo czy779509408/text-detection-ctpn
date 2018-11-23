@@ -17,6 +17,7 @@ from lib.text_connector.detectors import TextDetector
 from lib.text_connector.text_connect_cfg import Config as TextLineCfg
 from lib.rpn_msr.proposal_layer_tf import proposal_layer
 
+ROOT_DIR = "/Users/yh/workspace/tensorflow/czy/text-detection-ctpn/"
 
 def resize_im(im, scale, max_scale=None):
     f = float(scale) / min(im.shape[0], im.shape[1])
@@ -27,7 +28,7 @@ def resize_im(im, scale, max_scale=None):
 
 def draw_boxes(img, image_name, boxes, scale):
     base_name = image_name.split('/')[-1]
-    with open('data/results/' + 'res_{}.txt'.format(base_name.split('.')[0]), 'w') as f:
+    with open(ROOT_DIR + 'data/results/' + 'res_{}.txt'.format(base_name.split('.')[0]), 'w') as f:
         for box in boxes:
             if np.linalg.norm(box[0] - box[1]) < 5 or np.linalg.norm(box[3] - box[0]) < 5:
                 continue
@@ -49,7 +50,7 @@ def draw_boxes(img, image_name, boxes, scale):
             f.write(line)
 
     img = cv2.resize(img, None, None, fx=1.0 / scale, fy=1.0 / scale, interpolation=cv2.INTER_LINEAR)
-    cv2.imwrite(os.path.join("data/results", base_name), img)
+    cv2.imwrite(os.path.join(ROOT_DIR + "data/results", base_name), img)
 
 
 if __name__ == '__main__':
@@ -58,12 +59,12 @@ if __name__ == '__main__':
         shutil.rmtree("data/results/")
     os.makedirs("data/results/")
 
-    cfg_from_file('ctpn/text.yml')
+    cfg_from_file(ROOT_DIR + 'ctpn/text.yml')
 
     # init session
     config = tf.ConfigProto(allow_soft_placement=True)
     sess = tf.Session(config=config)
-    with gfile.FastGFile('data/ctpn.pb', 'rb') as f:
+    with gfile.FastGFile(ROOT_DIR + 'data/ctpn.pb', 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         sess.graph.as_default()

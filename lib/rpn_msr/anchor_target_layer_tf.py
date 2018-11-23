@@ -1,6 +1,10 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import numpy.random as npr
+
+import pyximport
+pyximport.install()
+
 from .generate_anchors import generate_anchors
 from lib.utils.bbox import bbox_overlaps, bbox_intersections
 from lib.fast_rcnn.config import cfg
