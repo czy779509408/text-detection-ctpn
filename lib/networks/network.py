@@ -206,12 +206,13 @@ class Network(object):
 
     @layer
     def proposal_layer(self, input, _feat_stride, anchor_scales, cfg_key, name):
+        print("cfgkey:" + cfg_key)
         if isinstance(input[0], tuple):
             input[0] = input[0][0]
             # input[0] shape is (1, H, W, Ax2)
             # rpn_rois <- (1 x H x W x A, 5) [0, x1, y1, x2, y2]
         with tf.variable_scope(name) as scope:
-            blob,bbox_delta = tf.py_func(proposal_layer_py,[input[0],input[1],input[2], cfg_key, _feat_stride, anchor_scales],\
+            blob,bbox_delta = tf.py_func(proposal_layer_py,[input[0],input[1],input[2], cfg_key, _feat_stride, anchor_scales],
                                      [tf.float32,tf.float32])
 
             rpn_rois = tf.convert_to_tensor(tf.reshape(blob,[-1, 5]), name = 'rpn_rois') # shape is (1 x H x W x A, 2)

@@ -34,5 +34,5 @@ TRAIN:
 TEST:
   HAS_RPN: True
   DETECT_MODE: O
-  checkpoints_path: checkpoints/
+  checkpoints_path: /Users/yh/workspace/tensorflow/czy/text-detection-ctpn/checkpoints/
   # checkpoints_path: output/ctpn_end2end/voc_2007_trainval

@@ -50,7 +50,7 @@ def proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info, cfg_key, _feat_
 
     assert rpn_cls_prob_reshape.shape[0] == 1, \
         'Only single item batches are supported'
-
+    cfg_key = cfg_key.decode("utf-8") # 解决python3 Unknown: KeyError: b'TEST' 问题
     pre_nms_topN  = cfg[cfg_key].RPN_PRE_NMS_TOP_N#12000,在做nms之前，最多保留的候选box数目
     post_nms_topN = cfg[cfg_key].RPN_POST_NMS_TOP_N#2000，做完nms之后，最多保留的box的数目
     nms_thresh    = cfg[cfg_key].RPN_NMS_THRESH#nms用参数，阈值是0.7
